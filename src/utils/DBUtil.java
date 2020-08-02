@@ -9,7 +9,7 @@ public class DBUtil {
     private static EntityManagerFactory emf;
 
 
-    public static EntityManager createEntityMangar(){
+    public static EntityManager createEntityManagar(){
         return _getEntityManagerFactory().createEntityManager();
     }
 

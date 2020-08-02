@@ -15,13 +15,13 @@ import models.Employee;
  * Servlet implementation class EmployeesNesServlet
  */
 @WebServlet("/employees/new")
-public class EmployeesNesServlet extends HttpServlet {
+public class EmployeesNewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public EmployeesNesServlet() {
+    public EmployeesNewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
