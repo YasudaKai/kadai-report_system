@@ -28,12 +28,12 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getMyAllReports",
             query = "SELECT r FROM Report AS r WHERE r.employee = :employee ORDER BY r.id DESC"
+
             ),
     @NamedQuery(
             name = "getMyReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
-            )
-
+            ),
 
 })
 @Entity
@@ -47,6 +47,7 @@ public class Report {
     @JoinColumn(name = "employee_id", nullable = false)
     private Employee employee;
 
+
     @Column(name = "report_date", nullable = false)
     private Date report_date;
 
@@ -59,6 +60,10 @@ public class Report {
 
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
+
+    @Column(name = "updated_at", nullable = false)
+    private Timestamp updated_at;
+
 
     public Integer getId() {
         return id;
@@ -116,6 +121,4 @@ public class Report {
         this.updated_at = updated_at;
     }
 
-    @Column(name = "updated_at", nullable = false)
-    private Timestamp updated_at;
 }

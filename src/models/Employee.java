@@ -31,6 +31,7 @@ import javax.persistence.Table;
             )
 
 
+
 })
 @Entity
 public class Employee {
@@ -59,6 +60,8 @@ public class Employee {
 
      @Column(name = "delete_flag", nullable = false)
      private Integer delete_flag;
+
+
 
     public Integer getDelete_flag() {
         return delete_flag;
@@ -108,6 +111,8 @@ public class Employee {
         this.admin_flag = admin_flag;
     }
 
+
+
     public Timestamp getCreated_at() {
         return created_at;
     }
@@ -123,6 +128,9 @@ public class Employee {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
+
+
+
 
 
 }

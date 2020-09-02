@@ -50,60 +50,62 @@ public class LoginServlet extends HttpServlet {
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        Boolean check_result = false;
-
-
-        String code = request.getParameter("code");
-        String plain_pass = request.getParameter("password");
+       Boolean check_result = false;
 
 
-        Employee e = null;
+       String code = request.getParameter("code");
+       String plain_pass = request.getParameter("password");
 
 
-        if(code != null && !code.equals("") && plain_pass != null && !plain_pass.equals("")){
-            EntityManager em = DBUtil.createEntityManagar();
+
+       Employee e = null;
 
 
-            String password = EncryptUtil.getPasswordEncrypt(
-                    plain_pass,
-                    (String)this.getServletContext().getAttribute("salt")
-                    );
+       if(code != null && !code.equals("") && plain_pass != null && !plain_pass.equals("")){
+           EntityManager em = DBUtil.createEntityManager();
 
 
-            try{
-                e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
-                      .setParameter("code", code)
-                      .setParameter("pass", password)
-                      .getSingleResult();
-            }catch(NoResultException ex){}
+           String password = EncryptUtil.getPasswordEncrypt(
+                   plain_pass,
+                   (String)this.getServletContext().getAttribute("pepper")
+                   );
+
+           try{
+               e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
+                     .setParameter("code", code)
+                     .setParameter("pass", password)
+                     .getSingleResult();
+           }catch(NoResultException ex){}
 
 
-            em.close();
+
+           em.close();
 
 
-            if(e != null){
-                check_result = true;
-            }
-        }
+           if(e != null){
+               check_result = true;
+           }
+       }
 
 
-        if(!check_result){
-            request.setAttribute("_token", request.getSession().getId());
-            request.setAttribute("hasError", true);
-            request.setAttribute("code", code);
+       if(!check_result){
+
+           request.setAttribute("_token", request.getSession().getId());
+           request.setAttribute("hasError", true);
+           request.setAttribute("code", code);
 
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
-            rd.forward(request, response);
-        }else{
-
-            request.getSession().setAttribute("login_employee", e);
+           RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
+           rd.forward(request, response);
 
 
-            request.getSession().setAttribute("flush", "ログインしました。");
-            response.sendRedirect(request.getContextPath() + "/");
-        }
+       }else{
+           request.getSession().setAttribute("login_employee", e);
+
+
+           request.getSession().setAttribute("flush", "ログインしました");
+           response.sendRedirect(request.getContextPath() + "/");
+       }
     }
 
 }

@@ -40,7 +40,7 @@ public class EmployeesCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String _token = (String)request.getParameter("_token");
         if(_token != null && _token.equals(request.getSession().getId())){
-            EntityManager em = DBUtil.createEntityManagar();
+            EntityManager em = DBUtil.createEntityManager();
 
 
             Employee e = new Employee();
@@ -51,7 +51,7 @@ public class EmployeesCreateServlet extends HttpServlet {
             e.setPassword(
                     EncryptUtil.getPasswordEncrypt(
                             request.getParameter("password"),
-                            (String)this.getServletContext().getAttribute("salt")
+                            (String)this.getServletContext().getAttribute("pepper")
                             )
                     );
             e.setAdmin_flag(Integer.parseInt(request.getParameter("admin_flag")));
